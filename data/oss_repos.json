@@ -1,0 +1,1173 @@
+{
+ "count": 146,
+ "tools": [
+  {
+   "name": "Counterfit",
+   "cat": "AI Model Security & Privacy",
+   "url": "https://github.com/Azure/counterfit",
+   "owner": "Azure",
+   "repo": "counterfit",
+   "status": "ok"
+  },
+  {
+   "name": "ML Privacy Meter",
+   "cat": "AI Model Security & Privacy",
+   "url": "https://github.com/privacytrustlab/ml_privacy_meter",
+   "owner": "privacytrustlab",
+   "repo": "ml_privacy_meter",
+   "status": "ok"
+  },
+  {
+   "name": "PrivacyRaven",
+   "cat": "AI Model Security & Privacy",
+   "url": "https://github.com/trailofbits/PrivacyRaven",
+   "owner": "trailofbits",
+   "repo": "PrivacyRaven",
+   "status": "ok"
+  },
+  {
+   "name": "TensorFlow Privacy",
+   "cat": "AI Model Security & Privacy",
+   "url": "https://github.com/tensorflow/privacy",
+   "owner": "tensorflow",
+   "repo": "privacy",
+   "status": "ok"
+  },
+  {
+   "name": "Adversarial Robustness Toolbox",
+   "cat": "AI Red Teaming & Adversarial Testing",
+   "url": "https://github.com/Trusted-AI/adversarial-robustness-toolbox",
+   "owner": "Trusted-AI",
+   "repo": "adversarial-robustness-toolbox",
+   "status": "ok"
+  },
+  {
+   "name": "CleverHans",
+   "cat": "AI Red Teaming & Adversarial Testing",
+   "url": "https://github.com/cleverhans-lab/cleverhans",
+   "owner": "cleverhans-lab",
+   "repo": "cleverhans",
+   "status": "ok"
+  },
+  {
+   "name": "Foolbox",
+   "cat": "AI Red Teaming & Adversarial Testing",
+   "url": "https://github.com/bethgelab/foolbox",
+   "owner": "bethgelab",
+   "repo": "foolbox",
+   "status": "ok"
+  },
+  {
+   "name": "TextAttack",
+   "cat": "AI Red Teaming & Adversarial Testing",
+   "url": "https://github.com/QData/TextAttack",
+   "owner": "QData",
+   "repo": "TextAttack",
+   "status": "ok"
+  },
+  {
+   "name": "Model Card Toolkit",
+   "cat": "AI/ML Dataset Security",
+   "url": "https://github.com/tensorflow/model-card-toolkit",
+   "owner": "tensorflow",
+   "repo": "model-card-toolkit",
+   "status": "ok"
+  },
+  {
+   "name": "Model Signing",
+   "cat": "AI/ML Dataset Security",
+   "url": "https://github.com/sigstore/model-transparency",
+   "owner": "sigstore",
+   "repo": "model-transparency",
+   "status": "ok"
+  },
+  {
+   "name": "Manifold",
+   "cat": "AI/ML Model Analysis",
+   "url": "https://github.com/uber/manifold",
+   "owner": "uber",
+   "repo": "manifold",
+   "status": "ok"
+  },
+  {
+   "name": "Netron",
+   "cat": "AI/ML Model Analysis",
+   "url": "https://github.com/lutzroeder/netron",
+   "owner": "lutzroeder",
+   "repo": "netron",
+   "status": "ok"
+  },
+  {
+   "name": "Kiterunner",
+   "cat": "API Security Testing",
+   "url": "https://github.com/assetnote/kiterunner",
+   "owner": "assetnote",
+   "repo": "kiterunner",
+   "status": "ok"
+  },
+  {
+   "name": "On-Chain-Investigations-Tools-List",
+   "cat": "BLOCKCHAIN / CRYPTO INVESTIGATION",
+   "url": "https://github.com/OffcierCia/On-Chain-Investigations-Tools-List",
+   "owner": "OffcierCia",
+   "repo": "On-Chain-Investigations-Tools-List",
+   "status": "ok"
+  },
+  {
+   "name": "Chiasmodon",
+   "cat": "Basic OSINT",
+   "url": "https://github.com/chiasmod0n/chiasmodon",
+   "owner": "chiasmod0n",
+   "repo": "chiasmodon",
+   "status": "ok"
+  },
+  {
+   "name": "dangerzone",
+   "cat": "Basic OSINT",
+   "url": "https://github.com/freedomofpress/dangerzone",
+   "owner": "freedomofpress",
+   "repo": "dangerzone",
+   "status": "ok"
+  },
+  {
+   "name": "Tookie-osint",
+   "cat": "Basic OSINT",
+   "url": "https://github.com/alfredredbird/tookie-osint",
+   "owner": "alfredredbird",
+   "repo": "tookie-osint",
+   "status": "ok"
+  },
+  {
+   "name": "Leaker",
+   "cat": "Breaches and Leaks",
+   "url": "https://github.com/vflame6/leaker",
+   "owner": "vflame6",
+   "repo": "leaker",
+   "status": "ok"
+  },
+  {
+   "name": "Gotanda",
+   "cat": "Browser Extensions",
+   "url": "https://github.com/NINOSUKI/Gotanda",
+   "owner": "NINOSUKI",
+   "repo": "Gotanda",
+   "status": "dead-404"
+  },
+  {
+   "name": "OSINT-SPY",
+   "cat": "Browser Extensions",
+   "url": "https://github.com/SharadKumar97/OSINT-SPY",
+   "owner": "SharadKumar97",
+   "repo": "OSINT-SPY",
+   "status": "ok"
+  },
+  {
+   "name": "Awesome Bug Bounty",
+   "cat": "Bug Bounty Resources",
+   "url": "https://github.com/djadmin/awesome-bug-bounty",
+   "owner": "djadmin",
+   "repo": "awesome-bug-bounty",
+   "status": "ok"
+  },
+  {
+   "name": "Dirsearch",
+   "cat": "Content Discovery & Fuzzing",
+   "url": "https://github.com/maurosoria/dirsearch",
+   "owner": "maurosoria",
+   "repo": "dirsearch",
+   "status": "ok"
+  },
+  {
+   "name": "SecLists",
+   "cat": "Content Discovery & Fuzzing",
+   "url": "https://github.com/danielmiessler/SecLists",
+   "owner": "danielmiessler",
+   "repo": "SecLists",
+   "status": "ok"
+  },
+  {
+   "name": "Wfuzz",
+   "cat": "Content Discovery & Fuzzing",
+   "url": "https://github.com/xmendez/wfuzz",
+   "owner": "xmendez",
+   "repo": "wfuzz",
+   "status": "ok"
+  },
+  {
+   "name": "OnionLinksV3",
+   "cat": "DARKNET",
+   "url": "https://github.com/01Kevin01/OnionLinksV3",
+   "owner": "01Kevin01",
+   "repo": "OnionLinksV3",
+   "status": "dead-404"
+  },
+  {
+   "name": "OnionScan",
+   "cat": "DARKNET",
+   "url": "https://github.com/s-rah/onionscan",
+   "owner": "s-rah",
+   "repo": "onionscan",
+   "status": "ok"
+  },
+  {
+   "name": "robin",
+   "cat": "DARKNET",
+   "url": "https://github.com/apurvsinghgautam/robin",
+   "owner": "apurvsinghgautam",
+   "repo": "robin",
+   "status": "ok"
+  },
+  {
+   "name": "TorBot",
+   "cat": "DARKNET",
+   "url": "https://github.com/DedSecInside/TorBot",
+   "owner": "DedSecInside",
+   "repo": "TorBot",
+   "status": "ok"
+  },
+  {
+   "name": "DiscordOSINT",
+   "cat": "DISCORD",
+   "url": "https://github.com/atoncehussein/DiscordOSINT",
+   "owner": "atoncehussein",
+   "repo": "DiscordOSINT",
+   "status": "ok"
+  },
+  {
+   "name": "GitDorker",
+   "cat": "DORK",
+   "url": "https://github.com/obheda12/GitDorker",
+   "owner": "obheda12",
+   "repo": "GitDorker",
+   "status": "ok"
+  },
+  {
+   "name": "Google Dork Cheatsheet",
+   "cat": "DORK",
+   "url": "https://github.com/robyfirnandoyusuf/Google-Dork-Cheatsheet",
+   "owner": "robyfirnandoyusuf",
+   "repo": "Google-Dork-Cheatsheet",
+   "status": "ok"
+  },
+  {
+   "name": "analytics-engine",
+   "cat": "FINANCE",
+   "url": "https://github.com/mashiox/analytics-engine",
+   "owner": "mashiox",
+   "repo": "analytics-engine",
+   "status": "ok"
+  },
+  {
+   "name": "Velocity",
+   "cat": "FLIGHT TRACKER",
+   "url": "https://github.com/AndrewCTF/velocity",
+   "owner": "AndrewCTF",
+   "repo": "velocity",
+   "status": "ok"
+  },
+  {
+   "name": "geo-sleuth",
+   "cat": "GEO",
+   "url": "https://github.com/Oldcircle/geo-sleuth",
+   "owner": "Oldcircle",
+   "repo": "geo-sleuth",
+   "status": "ok"
+  },
+  {
+   "name": "geoint-py",
+   "cat": "GEO",
+   "url": "https://github.com/gisfromscratch/geoint-py",
+   "owner": "gisfromscratch",
+   "repo": "geoint-py",
+   "status": "ok"
+  },
+  {
+   "name": "yt-dlp",
+   "cat": "HASH RECOVERY",
+   "url": "https://github.com/yt-dlp/yt-dlp",
+   "owner": "yt-dlp",
+   "repo": "yt-dlp",
+   "status": "ok"
+  },
+  {
+   "name": "insta-dl",
+   "cat": "INSTAGRAM",
+   "url": "https://github.com/subzeroid/insta-dl",
+   "owner": "subzeroid",
+   "repo": "insta-dl",
+   "status": "ok"
+  },
+  {
+   "name": "insto",
+   "cat": "INSTAGRAM",
+   "url": "https://github.com/subzeroid/insto",
+   "owner": "subzeroid",
+   "repo": "insto",
+   "status": "ok"
+  },
+  {
+   "name": "osi.ig",
+   "cat": "INSTAGRAM",
+   "url": "https://github.com/th3unkn0n/osi.ig",
+   "owner": "th3unkn0n",
+   "repo": "osi.ig",
+   "status": "ok"
+  },
+  {
+   "name": "Osintgram",
+   "cat": "INSTAGRAM",
+   "url": "https://github.com/Datalux/Osintgram",
+   "owner": "Datalux",
+   "repo": "Osintgram",
+   "status": "ok"
+  },
+  {
+   "name": "SoIG",
+   "cat": "INSTAGRAM",
+   "url": "https://github.com/yezz123/SoIG",
+   "owner": "yezz123",
+   "repo": "SoIG",
+   "status": "ok"
+  },
+  {
+   "name": "toutatis",
+   "cat": "INSTAGRAM",
+   "url": "https://github.com/megadose/toutatis",
+   "owner": "megadose",
+   "repo": "toutatis",
+   "status": "ok"
+  },
+  {
+   "name": "yesitsme",
+   "cat": "INSTAGRAM",
+   "url": "https://github.com/blackeko/yesitsme",
+   "owner": "blackeko",
+   "repo": "yesitsme",
+   "status": "ok"
+  },
+  {
+   "name": "Awesome GPT Prompt Injection",
+   "cat": "Jailbreak & Prompt Injection Resources",
+   "url": "https://github.com/FonduAI/awesome-gpt-prompt-injection",
+   "owner": "FonduAI",
+   "repo": "awesome-gpt-prompt-injection",
+   "status": "dead-404"
+  },
+  {
+   "name": "AI Exploits",
+   "cat": "LLM Vulnerability Testing",
+   "url": "https://github.com/protectai/ai-exploits",
+   "owner": "protectai",
+   "repo": "ai-exploits",
+   "status": "ok"
+  },
+  {
+   "name": "Garak",
+   "cat": "LLM Vulnerability Testing",
+   "url": "https://github.com/leondz/garak",
+   "owner": "leondz",
+   "repo": "garak",
+   "status": "ok"
+  },
+  {
+   "name": "LLM Fuzzer",
+   "cat": "LLM Vulnerability Testing",
+   "url": "https://github.com/mnns/LLMFuzzer",
+   "owner": "mnns",
+   "repo": "LLMFuzzer",
+   "status": "ok"
+  },
+  {
+   "name": "NeMo Guardrails",
+   "cat": "LLM Vulnerability Testing",
+   "url": "https://github.com/NVIDIA/NeMo-Guardrails",
+   "owner": "NVIDIA",
+   "repo": "NeMo-Guardrails",
+   "status": "ok"
+  },
+  {
+   "name": "PyRIT",
+   "cat": "LLM Vulnerability Testing",
+   "url": "https://github.com/Azure/PyRIT",
+   "owner": "Azure",
+   "repo": "PyRIT",
+   "status": "ok"
+  },
+  {
+   "name": "Rebuff",
+   "cat": "LLM Vulnerability Testing",
+   "url": "https://github.com/protectai/rebuff",
+   "owner": "protectai",
+   "repo": "rebuff",
+   "status": "ok"
+  },
+  {
+   "name": "exploit-database-papers",
+   "cat": "MALWARE",
+   "url": "https://github.com/offensive-security/exploitdb-papers",
+   "owner": "offensive-security",
+   "repo": "exploitdb-papers",
+   "status": "ok"
+  },
+  {
+   "name": "theZoo",
+   "cat": "MALWARE",
+   "url": "https://github.com/ytisf/theZoo",
+   "owner": "ytisf",
+   "repo": "theZoo",
+   "status": "ok"
+  },
+  {
+   "name": "Binwalk",
+   "cat": "METADATA & FILE ANALYSIS",
+   "url": "https://github.com/ReFirmLabs/binwalk",
+   "owner": "ReFirmLabs",
+   "repo": "binwalk",
+   "status": "ok"
+  },
+  {
+   "name": "MetaClean",
+   "cat": "METADATA & FILE ANALYSIS",
+   "url": "https://github.com/Moresyl/metaclean",
+   "owner": "Moresyl",
+   "repo": "metaclean",
+   "status": "ok"
+  },
+  {
+   "name": "Metagoofil",
+   "cat": "METADATA & FILE ANALYSIS",
+   "url": "https://github.com/laramies/metagoofil",
+   "owner": "laramies",
+   "repo": "metagoofil",
+   "status": "ok"
+  },
+  {
+   "name": "Jadx",
+   "cat": "Mobile Security",
+   "url": "https://github.com/skylot/jadx",
+   "owner": "skylot",
+   "repo": "jadx",
+   "status": "ok"
+  },
+  {
+   "name": "MobSF",
+   "cat": "Mobile Security",
+   "url": "https://github.com/MobSF/Mobile-Security-Framework-MobSF",
+   "owner": "MobSF",
+   "repo": "Mobile-Security-Framework-MobSF",
+   "status": "ok"
+  },
+  {
+   "name": "Objection",
+   "cat": "Mobile Security",
+   "url": "https://github.com/sensepost/objection",
+   "owner": "sensepost",
+   "repo": "objection",
+   "status": "ok"
+  },
+  {
+   "name": "Helium MCP",
+   "cat": "NEWS",
+   "url": "https://github.com/connerlambden/helium-mcp",
+   "owner": "connerlambden",
+   "repo": "helium-mcp",
+   "status": "dead-404"
+  },
+  {
+   "name": "awesome-public-datasets",
+   "cat": "OPEN DIRECTORY",
+   "url": "https://github.com/awesomedata/awesome-public-datasets",
+   "owner": "awesomedata",
+   "repo": "awesome-public-datasets",
+   "status": "ok"
+  },
+  {
+   "name": "GhostTrack",
+   "cat": "PHONE",
+   "url": "https://github.com/HunxByts/GhostTrack",
+   "owner": "HunxByts",
+   "repo": "GhostTrack",
+   "status": "ok"
+  },
+  {
+   "name": "Moriarty-Project",
+   "cat": "PHONE",
+   "url": "https://github.com/AzizKpln/Moriarty-Project",
+   "owner": "AzizKpln",
+   "repo": "Moriarty-Project",
+   "status": "ok"
+  },
+  {
+   "name": "Nitter",
+   "cat": "SOCIAL MEDIA",
+   "url": "https://github.com/zedeus/nitter",
+   "owner": "zedeus",
+   "repo": "nitter",
+   "status": "ok"
+  },
+  {
+   "name": "Social-Media-OSINT-Tools-Collection",
+   "cat": "SOCIAL MEDIA",
+   "url": "https://github.com/OSINTVerseHQ/Social-Media-OSINT-Tools-Collection",
+   "owner": "osintambition",
+   "repo": "Social-Media-OSINT-Tools-Collection",
+   "status": "moved"
+  },
+  {
+   "name": "trape",
+   "cat": "SOCIAL MEDIA",
+   "url": "https://github.com/jofpin/trape",
+   "owner": "jofpin",
+   "repo": "trape",
+   "status": "ok"
+  },
+  {
+   "name": "LELU",
+   "cat": "POLICE / LE / FED",
+   "url": "https://github.com/the-legal-aid-society/LELU",
+   "owner": "the-legal-aid-society",
+   "repo": "LELU",
+   "status": "ok"
+  },
+  {
+   "name": "Awesome Deblurring",
+   "cat": "PRIVACY / SECURITY",
+   "url": "https://github.com/subeeshvasu/Awesome-Deblurring",
+   "owner": "subeeshvasu",
+   "repo": "Awesome-Deblurring",
+   "status": "ok"
+  },
+  {
+   "name": "jivoi/awesome-osint",
+   "cat": "PRIVACY / SECURITY",
+   "url": "https://github.com/jivoi/awesome-osint",
+   "owner": "jivoi",
+   "repo": "awesome-osint",
+   "status": "ok"
+  },
+  {
+   "name": "Ph055a OSINT_Collection",
+   "cat": "PRIVACY / SECURITY",
+   "url": "https://github.com/Ph055a/OSINT_Collection",
+   "owner": "Ph055a",
+   "repo": "OSINT_Collection",
+   "status": "ok"
+  },
+  {
+   "name": "QueryTool",
+   "cat": "PRIVACY / SECURITY",
+   "url": "https://github.com/oryon-osint/querytool",
+   "owner": "oryon-osint",
+   "repo": "querytool",
+   "status": "ok"
+  },
+  {
+   "name": "sinwindie/OSINT",
+   "cat": "PRIVACY / SECURITY",
+   "url": "https://github.com/sinwindie/OSINT",
+   "owner": "sinwindie",
+   "repo": "OSINT",
+   "status": "ok"
+  },
+  {
+   "name": "Pushshift API Guide",
+   "cat": "REDDIT",
+   "url": "https://github.com/pushshift/api",
+   "owner": "pushshift",
+   "repo": "api",
+   "status": "ok"
+  },
+  {
+   "name": "Reddit_Persona",
+   "cat": "REDDIT",
+   "url": "https://github.com/n2itn/reddit_persona",
+   "owner": "n2itn",
+   "repo": "reddit_persona",
+   "status": "ok"
+  },
+  {
+   "name": "Amass",
+   "cat": "Recon",
+   "url": "https://github.com/owasp-amass/amass",
+   "owner": "owasp-amass",
+   "repo": "amass",
+   "status": "ok"
+  },
+  {
+   "name": "Arjun",
+   "cat": "Recon",
+   "url": "https://github.com/s0md3v/Arjun",
+   "owner": "s0md3v",
+   "repo": "Arjun",
+   "status": "ok"
+  },
+  {
+   "name": "Darkmoon",
+   "cat": "Recon",
+   "url": "https://github.com/ASCIT31/Dark-Moon",
+   "owner": "ASCIT31",
+   "repo": "Dark-Moon",
+   "status": "ok"
+  },
+  {
+   "name": "Feroxbuster",
+   "cat": "Recon",
+   "url": "https://github.com/epi052/feroxbuster",
+   "owner": "epi052",
+   "repo": "feroxbuster",
+   "status": "ok"
+  },
+  {
+   "name": "ffuf",
+   "cat": "Recon",
+   "url": "https://github.com/ffuf/ffuf",
+   "owner": "ffuf",
+   "repo": "ffuf",
+   "status": "ok"
+  },
+  {
+   "name": "Findomain",
+   "cat": "Recon",
+   "url": "https://github.com/Findomain/Findomain",
+   "owner": "Findomain",
+   "repo": "Findomain",
+   "status": "ok"
+  },
+  {
+   "name": "FOCA",
+   "cat": "Recon",
+   "url": "https://github.com/ElevenPaths/FOCA",
+   "owner": "ElevenPaths",
+   "repo": "FOCA",
+   "status": "ok"
+  },
+  {
+   "name": "gau",
+   "cat": "Recon",
+   "url": "https://github.com/lc/gau",
+   "owner": "lc",
+   "repo": "gau",
+   "status": "ok"
+  },
+  {
+   "name": "Gobuster",
+   "cat": "Recon",
+   "url": "https://github.com/OJ/gobuster",
+   "owner": "OJ",
+   "repo": "gobuster",
+   "status": "ok"
+  },
+  {
+   "name": "httpx",
+   "cat": "Recon",
+   "url": "https://github.com/projectdiscovery/httpx",
+   "owner": "projectdiscovery",
+   "repo": "httpx",
+   "status": "ok"
+  },
+  {
+   "name": "ivre",
+   "cat": "Recon",
+   "url": "https://github.com/ivre/ivre",
+   "owner": "ivre",
+   "repo": "ivre",
+   "status": "ok"
+  },
+  {
+   "name": "Katana",
+   "cat": "Recon",
+   "url": "https://github.com/projectdiscovery/katana",
+   "owner": "projectdiscovery",
+   "repo": "katana",
+   "status": "ok"
+  },
+  {
+   "name": "log4j-scan",
+   "cat": "Recon",
+   "url": "https://github.com/fullhunt/log4j-scan",
+   "owner": "fullhunt",
+   "repo": "log4j-scan",
+   "status": "ok"
+  },
+  {
+   "name": "Nuclei",
+   "cat": "Recon",
+   "url": "https://github.com/projectdiscovery/nuclei",
+   "owner": "projectdiscovery",
+   "repo": "nuclei",
+   "status": "ok"
+  },
+  {
+   "name": "Osmedeus",
+   "cat": "Recon",
+   "url": "https://github.com/j3ssie/osmedeus",
+   "owner": "j3ssie",
+   "repo": "osmedeus",
+   "status": "ok"
+  },
+  {
+   "name": "ParamSpider",
+   "cat": "Recon",
+   "url": "https://github.com/devanshbatham/ParamSpider",
+   "owner": "devanshbatham",
+   "repo": "ParamSpider",
+   "status": "ok"
+  },
+  {
+   "name": "Photon",
+   "cat": "Recon",
+   "url": "https://github.com/s0md3v/Photon",
+   "owner": "s0md3v",
+   "repo": "Photon",
+   "status": "ok"
+  },
+  {
+   "name": "Raccoon",
+   "cat": "Recon",
+   "url": "https://github.com/evyatarmeged/Raccoon",
+   "owner": "evyatarmeged",
+   "repo": "Raccoon",
+   "status": "ok"
+  },
+  {
+   "name": "Recon-ng",
+   "cat": "Recon",
+   "url": "https://github.com/lanmaster53/recon-ng",
+   "owner": "lanmaster53",
+   "repo": "recon-ng",
+   "status": "ok"
+  },
+  {
+   "name": "Reconftw",
+   "cat": "Recon",
+   "url": "https://github.com/six2dez/reconftw",
+   "owner": "six2dez",
+   "repo": "reconftw",
+   "status": "ok"
+  },
+  {
+   "name": "SpiderFoot",
+   "cat": "Recon",
+   "url": "https://github.com/smicallef/spiderfoot",
+   "owner": "smicallef",
+   "repo": "spiderfoot",
+   "status": "ok"
+  },
+  {
+   "name": "Subfinder",
+   "cat": "Recon",
+   "url": "https://github.com/projectdiscovery/subfinder",
+   "owner": "projectdiscovery",
+   "repo": "subfinder",
+   "status": "ok"
+  },
+  {
+   "name": "waybackurls",
+   "cat": "Recon",
+   "url": "https://github.com/tomnomnom/waybackurls",
+   "owner": "tomnomnom",
+   "repo": "waybackurls",
+   "status": "ok"
+  },
+  {
+   "name": "web-check",
+   "cat": "Recon",
+   "url": "https://github.com/Lissy93/web-check",
+   "owner": "Lissy93",
+   "repo": "web-check",
+   "status": "ok"
+  },
+  {
+   "name": "WebSift",
+   "cat": "Recon",
+   "url": "https://github.com/s-r-e-e-r-a-j/WebSift",
+   "owner": "s-r-e-e-r-a-j",
+   "repo": "WebSift",
+   "status": "ok"
+  },
+  {
+   "name": "Assetfinder",
+   "cat": "Reconnaissance & Enumeration",
+   "url": "https://github.com/tomnomnom/assetfinder",
+   "owner": "tomnomnom",
+   "repo": "assetfinder",
+   "status": "ok"
+  },
+  {
+   "name": "DNSRecon",
+   "cat": "Reconnaissance & Enumeration",
+   "url": "https://github.com/darkoperator/dnsrecon",
+   "owner": "darkoperator",
+   "repo": "dnsrecon",
+   "status": "ok"
+  },
+  {
+   "name": "Fierce",
+   "cat": "Reconnaissance & Enumeration",
+   "url": "https://github.com/mschwager/fierce",
+   "owner": "mschwager",
+   "repo": "fierce",
+   "status": "ok"
+  },
+  {
+   "name": "Knock",
+   "cat": "Reconnaissance & Enumeration",
+   "url": "https://github.com/guelfoweb/knock",
+   "owner": "guelfoweb",
+   "repo": "knock",
+   "status": "ok"
+  },
+  {
+   "name": "MassDNS",
+   "cat": "Reconnaissance & Enumeration",
+   "url": "https://github.com/blechschmidt/massdns",
+   "owner": "blechschmidt",
+   "repo": "massdns",
+   "status": "ok"
+  },
+  {
+   "name": "Shuffledns",
+   "cat": "Reconnaissance & Enumeration",
+   "url": "https://github.com/projectdiscovery/shuffledns",
+   "owner": "projectdiscovery",
+   "repo": "shuffledns",
+   "status": "ok"
+  },
+  {
+   "name": "Sublist3r",
+   "cat": "Reconnaissance & Enumeration",
+   "url": "https://github.com/aboul3la/Sublist3r",
+   "owner": "aboul3la",
+   "repo": "Sublist3r",
+   "status": "ok"
+  },
+  {
+   "name": "Faraday",
+   "cat": "Reporting & Collaboration",
+   "url": "https://github.com/infobyte/faraday",
+   "owner": "infobyte",
+   "repo": "faraday",
+   "status": "ok"
+  },
+  {
+   "name": "Reconness",
+   "cat": "Reporting & Collaboration",
+   "url": "https://github.com/reconness/reconness",
+   "owner": "reconness",
+   "repo": "reconness",
+   "status": "ok"
+  },
+  {
+   "name": "Awesome ML for Cybersecurity",
+   "cat": "Research & Education",
+   "url": "https://github.com/jivoi/awesome-ml-for-cybersecurity",
+   "owner": "jivoi",
+   "repo": "awesome-ml-for-cybersecurity",
+   "status": "ok"
+  },
+  {
+   "name": "ML Security Reading List",
+   "cat": "Research & Education",
+   "url": "https://github.com/0xRadi/AI-ML-Security-Reading-List",
+   "owner": "0xRadi",
+   "repo": "AI-ML-Security-Reading-List",
+   "status": "dead-404"
+  },
+  {
+   "name": "Trail of Bits AI Security",
+   "cat": "Research & Education",
+   "url": "https://github.com/trailofbits/ai-security-bestpractices",
+   "owner": "trailofbits",
+   "repo": "ai-security-bestpractices",
+   "status": "dead-404"
+  },
+  {
+   "name": "git-hound",
+   "cat": "SOURCE CODES",
+   "url": "https://github.com/tillson/git-hound",
+   "owner": "tillson",
+   "repo": "git-hound",
+   "status": "ok"
+  },
+  {
+   "name": "Shhgit",
+   "cat": "SOURCE CODES",
+   "url": "https://github.com/eth0izzle/shhgit",
+   "owner": "eth0izzle",
+   "repo": "shhgit",
+   "status": "ok"
+  },
+  {
+   "name": "Zen",
+   "cat": "SOURCE CODES",
+   "url": "https://github.com/s0md3v/Zen",
+   "owner": "s0md3v",
+   "repo": "Zen",
+   "status": "ok"
+  },
+  {
+   "name": "maltego-telegram",
+   "cat": "TELEGRAM",
+   "url": "https://github.com/vognik/maltego-telegram",
+   "owner": "vognik",
+   "repo": "maltego-telegram",
+   "status": "ok"
+  },
+  {
+   "name": "mitaka",
+   "cat": "TOOLSET",
+   "url": "https://github.com/ninoseki/mitaka",
+   "owner": "ninoseki",
+   "repo": "mitaka",
+   "status": "ok"
+  },
+  {
+   "name": "NullSec Linux",
+   "cat": "TOOLSET",
+   "url": "https://github.com/bad-antics/nullsec-linux",
+   "owner": "bad-antics",
+   "repo": "nullsec-linux",
+   "status": "ok"
+  },
+  {
+   "name": "Seekr",
+   "cat": "TOOLSET",
+   "url": "https://github.com/seekr-osint/seekr",
+   "owner": "seekr-osint",
+   "repo": "seekr",
+   "status": "ok"
+  },
+  {
+   "name": "LinkScope",
+   "cat": "UNIFIED SEARCH",
+   "url": "https://github.com/AccentuSoft/LinkScope_Client",
+   "owner": "AccentuSoft",
+   "repo": "LinkScope_Client",
+   "status": "ok"
+  },
+  {
+   "name": "metabigor",
+   "cat": "DOMAIN / IP / DNS",
+   "url": "https://github.com/j3ssie/metabigor",
+   "owner": "j3ssie",
+   "repo": "metabigor",
+   "status": "ok"
+  },
+  {
+   "name": "Blackbird",
+   "cat": "USERNAME",
+   "url": "https://github.com/p1ngul1n0/blackbird",
+   "owner": "p1ngul1n0",
+   "repo": "blackbird",
+   "status": "ok"
+  },
+  {
+   "name": "buster",
+   "cat": "USERNAME",
+   "url": "https://github.com/sham00n/buster",
+   "owner": "sham00n",
+   "repo": "buster",
+   "status": "ok"
+  },
+  {
+   "name": "Crosslinked",
+   "cat": "USERNAME",
+   "url": "https://github.com/m8sec/CrossLinked",
+   "owner": "m8sec",
+   "repo": "CrossLinked",
+   "status": "ok"
+  },
+  {
+   "name": "email2phonenumber",
+   "cat": "USERNAME",
+   "url": "https://github.com/martinvigo/email2phonenumber",
+   "owner": "martinvigo",
+   "repo": "email2phonenumber",
+   "status": "ok"
+  },
+  {
+   "name": "Ghunt",
+   "cat": "USERNAME",
+   "url": "https://github.com/mxrch/GHunt",
+   "owner": "mxrch",
+   "repo": "GHunt",
+   "status": "ok"
+  },
+  {
+   "name": "MailAccess",
+   "cat": "USERNAME",
+   "url": "https://github.com/KatrielMoses/MailAccess",
+   "owner": "KatrielMoses",
+   "repo": "MailAccess",
+   "status": "ok"
+  },
+  {
+   "name": "Mailcat",
+   "cat": "USERNAME",
+   "url": "https://github.com/sharsil/mailcat",
+   "owner": "sharsil",
+   "repo": "mailcat",
+   "status": "ok"
+  },
+  {
+   "name": "mosint",
+   "cat": "USERNAME",
+   "url": "https://github.com/alpkeskin/mosint",
+   "owner": "alpkeskin",
+   "repo": "mosint",
+   "status": "ok"
+  },
+  {
+   "name": "Nexfil",
+   "cat": "USERNAME",
+   "url": "https://github.com/thewhiteh4t/nexfil",
+   "owner": "thewhiteh4t",
+   "repo": "nexfil",
+   "status": "ok"
+  },
+  {
+   "name": "Profil3r",
+   "cat": "USERNAME",
+   "url": "https://github.com/Rog3rSm1th/Profil3r",
+   "owner": "Rog3rSm1th",
+   "repo": "Profil3r",
+   "status": "dead-404"
+  },
+  {
+   "name": "sherlock",
+   "cat": "USERNAME",
+   "url": "https://github.com/sherlock-project/sherlock",
+   "owner": "sherlock-project",
+   "repo": "sherlock",
+   "status": "ok"
+  },
+  {
+   "name": "snoop",
+   "cat": "USERNAME",
+   "url": "https://github.com/snooppr/snoop",
+   "owner": "snooppr",
+   "repo": "snoop",
+   "status": "ok"
+  },
+  {
+   "name": "user-scanner",
+   "cat": "USERNAME",
+   "url": "https://github.com/kaifcodec/user-scanner",
+   "owner": "kaifcodec",
+   "repo": "user-scanner",
+   "status": "ok"
+  },
+  {
+   "name": "user-scanner",
+   "cat": "USERNAME",
+   "url": "https://github.com/kaifcodec/user-scanner.git",
+   "owner": "kaifcodec",
+   "repo": "user-scanner",
+   "status": "ok"
+  },
+  {
+   "name": "UserRecon",
+   "cat": "USERNAME",
+   "url": "https://github.com/thelinuxchoice/userrecon",
+   "owner": "thelinuxchoice",
+   "repo": "userrecon",
+   "status": "dead-404"
+  },
+  {
+   "name": "WhatBreach",
+   "cat": "USERNAME",
+   "url": "https://github.com/Ekultek/WhatBreach",
+   "owner": "Ekultek",
+   "repo": "WhatBreach",
+   "status": "ok"
+  },
+  {
+   "name": "Nikto",
+   "cat": "Vulnerability Scanning",
+   "url": "https://github.com/sullo/nikto",
+   "owner": "sullo",
+   "repo": "nikto",
+   "status": "ok"
+  },
+  {
+   "name": "Sightline",
+   "cat": "WAR / MILITARY CONFLICT",
+   "url": "https://github.com/ni5arga/sightline",
+   "owner": "ni5arga",
+   "repo": "sightline",
+   "status": "ok"
+  },
+  {
+   "name": "Commix",
+   "cat": "Web Security Testing",
+   "url": "https://github.com/commixproject/commix",
+   "owner": "commixproject",
+   "repo": "commix",
+   "status": "ok"
+  },
+  {
+   "name": "NoSQLMap",
+   "cat": "Web Security Testing",
+   "url": "https://github.com/codingo/NoSQLMap",
+   "owner": "codingo",
+   "repo": "NoSQLMap",
+   "status": "ok"
+  },
+  {
+   "name": "XSStrike",
+   "cat": "Web Security Testing",
+   "url": "https://github.com/s0md3v/XSStrike",
+   "owner": "s0md3v",
+   "repo": "XSStrike",
+   "status": "ok"
+  },
+  {
+   "name": "APTnotes",
+   "cat": "World clock",
+   "url": "https://github.com/aptnotes/data",
+   "owner": "aptnotes",
+   "repo": "data",
+   "status": "ok"
+  },
+  {
+   "name": "C2IntelFeeds",
+   "cat": "World clock",
+   "url": "https://github.com/drb-ra/C2IntelFeeds",
+   "owner": "drb-ra",
+   "repo": "C2IntelFeeds",
+   "status": "ok"
+  },
+  {
+   "name": "intelowlproject/IntelOwl",
+   "cat": "World clock",
+   "url": "https://github.com/intelowlproject/IntelOwl",
+   "owner": "intelowlproject",
+   "repo": "IntelOwl",
+   "status": "ok"
+  },
+  {
+   "name": "OpenCTI",
+   "cat": "World clock",
+   "url": "https://github.com/OpenCTI-Platform/opencti",
+   "owner": "OpenCTI-Platform",
+   "repo": "opencti",
+   "status": "ok"
+  },
+  {
+   "name": "Sigma Rules",
+   "cat": "World clock",
+   "url": "https://github.com/SigmaHQ/sigma",
+   "owner": "SigmaHQ",
+   "repo": "sigma",
+   "status": "ok"
+  },
+  {
+   "name": "YETI",
+   "cat": "World clock",
+   "url": "https://github.com/yeti-platform/yeti",
+   "owner": "yeti-platform",
+   "repo": "yeti",
+   "status": "ok"
+  }
+ ]
+}

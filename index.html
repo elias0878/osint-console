@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OSINT Console — مسح شامل بلا مفاتيح</title>
+<style>
+:root{--bg:#080c11;--panel:#0f1620;--panel2:#0c131c;--line:#1b2735;--tx:#e9f0f7;--mut:#8ba3ba;
+--acc:#22d3a6;--acc2:#3b82f6;--warn:#f59e0b;--bad:#ef4444;--r:14px}
+*{box-sizing:border-box}html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--tx);font-family:"Segoe UI",Tahoma,"Noto Naskh Arabic",Arial,sans-serif;
+font-size:14px;line-height:1.65;overflow:hidden}
+.app{display:grid;grid-template-columns:250px 1fr;height:100vh}
+aside{background:var(--panel2);border-inline-start:1px solid var(--line);overflow-y:auto;padding:12px 10px 40px}
+.brand{display:flex;gap:9px;align-items:center;margin-bottom:12px;padding:0 6px}
+.logo{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,var(--acc),var(--acc2));
+display:grid;place-items:center;font-size:17px}
+.brand h1{font-size:14px;margin:0}.brand small{color:var(--mut);font-size:10.5px}
+.grp{color:var(--mut);font-size:10.5px;letter-spacing:.4px;margin:14px 8px 5px}
+.item{display:flex;gap:8px;align-items:center;padding:7px 9px;border-radius:9px;cursor:pointer;
+color:#c5d3e1;border:1px solid transparent;font-size:13px}
+.item:hover{background:#131f2c;color:#fff}
+.item.on{background:linear-gradient(90deg,#153048,#11283a);border-color:#22506f;color:#fff}
+.item .ic{width:18px;text-align:center;font-size:14px}
+.item .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+main{display:flex;flex-direction:column;overflow:hidden}
+header{display:flex;align-items:center;gap:10px;padding:10px 18px;border-bottom:1px solid var(--line);
+background:var(--panel);flex-wrap:wrap}
+header h2{margin:0;font-size:15px}
+.pill{font-size:11px;padding:3px 9px;border-radius:999px;border:1px solid var(--line);color:var(--mut)}
+.pill.ok{color:#6ee7b7;border-color:#14532d;background:#052e1f}
+.pill.bad{color:#fca5a5;border-color:#7f1d1d;background:#2a0d0d}
+.pill.run{color:#fcd34d;border-color:#78350f;background:#2a1a05}
+.spacer{flex:1}
+.content{overflow-y:auto;padding:16px 18px 80px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px;margin-bottom:12px}
+.card h3{margin:0 0 4px;font-size:15px}
+.muted{color:var(--mut);font-size:12.5px}
+input[type=text],input[type=password],textarea,select{background:#070e15;border:1px solid var(--line);
+color:var(--tx);border-radius:10px;padding:11px 13px;font-family:inherit;font-size:14px;width:100%;outline:none}
+input:focus,textarea:focus{border-color:#2b6f92;box-shadow:0 0 0 3px rgba(34,211,166,.08)}
+textarea{min-height:130px;resize:vertical;font-family:ui-monospace,monospace;font-size:12.5px}
+button{background:linear-gradient(135deg,var(--acc),#19b391);color:#04211a;border:0;border-radius:10px;
+padding:11px 20px;font-weight:700;font-family:inherit;font-size:14px;cursor:pointer;white-space:nowrap}
+button:hover{filter:brightness(1.08)}button:disabled{opacity:.55;cursor:progress}
+button.ghost{background:transparent;border:1px solid var(--line);color:var(--tx);font-weight:600;
+padding:8px 14px;font-size:13px}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.bar{height:9px;background:#111c28;border-radius:6px;overflow:hidden;margin:10px 0}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--acc),var(--acc2));transition:width .35s}
+.grid4{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:9px;margin-top:10px}
+.stat{background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:10px;text-align:center}
+.stat b{display:block;font-size:20px;line-height:1.25}.stat span{color:var(--mut);font-size:11.5px}
+.res{border:1px solid var(--line);border-radius:11px;margin-bottom:8px;background:var(--panel2);overflow:hidden}
+.res .hd{display:flex;gap:9px;align-items:center;padding:9px 12px;cursor:pointer;font-size:13.5px}
+.res .hd:hover{background:#12202d}
+.res .bd{padding:0 12px 12px;border-top:1px solid var(--line)}
+.badge{font-size:11px;padding:2px 8px;border-radius:999px;border:1px solid;white-space:nowrap}
+.b-ok{color:#6ee7b7;border-color:#14532d;background:#052e1f}
+.b-err{color:#fca5a5;border-color:#7f1d1d;background:#2a0d0d}
+.b-run{color:#fcd34d;border-color:#78350f;background:#2a1a05}
+.b-skip{color:#94a3b8;border-color:#334155;background:#0f172a}
+.spin{display:inline-block;width:12px;height:12px;border:2px solid #2b3d4f;border-top-color:var(--acc);
+border-radius:50%;animation:sp .7s linear infinite;vertical-align:-2px}
+@keyframes sp{to{transform:rotate(360deg)}}
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin:8px 0}
+th,td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:right;vertical-align:top}
+th{color:var(--mut);font-weight:600;background:#0d1721}
+tr:hover td{background:#101c28}
+a{color:#7dd3fc;text-decoration:none}a:hover{text-decoration:underline}
+.kv{display:grid;grid-template-columns:170px 1fr;gap:1px 10px;font-size:13px}
+.kv>div{padding:3px 0;border-bottom:1px dashed #16222f}
+.kv .k{color:var(--mut)}
+details{border:1px solid var(--line);border-radius:9px;padding:7px 10px;margin:7px 0;background:#0b131c}
+summary{cursor:pointer;font-weight:600;font-size:13px}
+pre{background:#050b11;border:1px solid var(--line);border-radius:9px;padding:10px;overflow:auto;
+font-size:11.5px;max-height:420px;direction:ltr;text-align:left}
+.err{background:#2a0d0d;border:1px solid #7f1d1d;color:#fecaca;padding:9px 11px;border-radius:9px;font-size:12.5px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.chip{background:#0d1826;border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:11.5px;
+color:#a8bccf;cursor:pointer}.chip:hover{border-color:#2b6f92;color:#fff}
+.hint{color:var(--mut);font-size:12px;margin-top:6px}
+::-webkit-scrollbar{width:10px;height:10px}::-webkit-scrollbar-thumb{background:#1b2735;border-radius:8px}
+@media(max-width:860px){.app{grid-template-columns:1fr;grid-template-rows:auto 1fr}
+aside{max-height:32vh;border-inline-start:0;border-bottom:1px solid var(--line)}.kv{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside>
+    <div class="brand"><div class="logo">🛰️</div>
+      <div><h1>OSINT Console</h1><small>مجاني · بلا مفاتيح · محلي</small></div></div>
+    <div class="item on" data-id="sweep"><span class="ic">🎯</span><span class="nm">المسح الشامل</span></div>
+    <div id="nav"></div>
+    <div class="grp">النظام</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;padding:0 8px">
+      <span class="pill" id="stHealth">…</span><span class="pill" id="stModules">…</span></div>
+    <div class="grp">تنبيه</div>
+    <div class="muted" style="padding:0 10px;font-size:11.5px">الوحدات النشطة (المنافذ/فحص HTTP) تُستخدم على أهداف تملكها فقط.</div>
+  </aside>
+  <main>
+    <header>
+      <h2 id="title">المسح الشامل</h2>
+      <span class="pill" id="statePill" style="display:none"></span>
+      <div class="spacer"></div>
+      <button class="ghost" id="selfcheck">فحص ذاتي</button>
+      <span class="pill">بلا تسجيل · بلا مفاتيح API</span>
+    </header>
+    <div class="content" id="content"></div>
+  </main>
+</div>
+<script>
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s===null||s===undefined?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let MODULES=[], ACTIVE='sweep', SWEEP=null;
+
+const SPECIAL={
+  file:{type:'file',desc:'ارفع صورة/PDF/مستنداً (حتى 25MB): نوع حقيقي، هاشات، EXIF/GPS، بيانات PDF، سلاسل، مؤشرات.'},
+  ioc:{type:'textarea',desc:'الصق نصاً/تقريراً لاستخراج IPs ونطاقات وروابط وبريد وهاشات وعناوين عملات وCVE مع إثراء اختياري.'},
+  catalog:{type:'search',desc:'بحث فوري في 867 أداة مجانية من تدقيق Awesome-OSINT.'},
+  password:{type:'password',desc:'تُحسب محلياً ويُرسل أول 5 أحرف من SHA-1 فقط (k-anonymity). لا تُخزَّن.'},
+  ports:{type:'text',desc:'فحص TCP connect — على أهدافك أو المصرّح بها فقط.'}
+};
+
+async function boot(){
+  try{const h=await (await fetch('/api/health')).json();
+    $('#stHealth').textContent='متصل ✓';$('#stHealth').className='pill ok';
+  }catch(e){$('#stHealth').textContent='غير متصل';$('#stHealth').className='pill bad';}
+  try{
+    const r=await (await fetch('/api/modules')).json(); MODULES=r.modules;
+    $('#stModules').textContent=MODULES.length+' وحدة';
+    const nav=$('#nav');let cur='';
+    MODULES.forEach(m=>{
+      if(m.group!==cur){cur=m.group;const g=document.createElement('div');g.className='grp';g.textContent=cur;nav.appendChild(g);}
+      const d=document.createElement('div');d.className='item';d.dataset.id=m.id;
+      d.innerHTML='<span class="ic">'+esc(m.icon)+'</span><span class="nm">'+esc(m.name)+'</span>';
+      d.onclick=()=>select(m.id);nav.appendChild(d);
+    });
+  }catch(e){}
+  $$('.item').forEach(el=>{if(el.dataset.id==='sweep')el.onclick=()=>select('sweep');});
+  $('#selfcheck').onclick=runSelfCheck;
+  select('sweep');
+}
+
+function setActive(id){
+  ACTIVE=id;
+  $$('.item').forEach(e=>e.classList.toggle('on',e.dataset.id===id));
+}
+
+function select(id){
+  if(SWEEP&&SWEEP.poll){clearInterval(SWEEP.poll);}
+  setActive(id);
+  const m = id==='sweep'
+    ? {id:'sweep',name:'المسح الشامل',icon:'🎯',ph:'example.com'}
+    : (MODULES.find(x=>x.id===id)||{name:id,icon:'🔧'});
+  $('#title').textContent=m.name;
+  const sp=SPECIAL[id]||{};
+  let form='';
+  if(sp.type==='file'){form='<div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center"><input type="file" id="f"><button id="go">تحليل الملف</button></div>';}
+  else if(sp.type==='textarea'){form='<textarea id="q" placeholder="الصق النص هنا…"></textarea><div class="btnrow"><button id="go">استخراج المؤشرات</button><label class="muted"><input type="checkbox" id="enrich"> إثراء DNS/Geo</label></div>';}
+  else if(sp.type==='password'){form='<input type="password" id="q" placeholder="كلمة المرور" autocomplete="off"><div class="btnrow"><button id="go">تحليل</button></div>';}
+  else{
+    const ex=id==='sweep'?['example.com','8.8.8.8','torvalds','test@gmail.com','CVE-2021-44228','50.11,8.68','+4915112345678','1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa']
+      :(m.ph||'').split(' ').slice(0,1);
+    form='<input type="text" id="q" placeholder="'+esc(m.ph||'')+'"><div class="btnrow">'+
+      (id==='sweep'?'<button id="go">ابدأ المسح الشامل</button><button class="ghost" id="stop" style="display:none">إيقاف</button>':'<button id="go">تشغيل</button>')+
+      '</div><div class="chips" id="chips"></div>';
+  }
+  $('#content').innerHTML='<div class="card"><h3>'+esc(m.icon||'🔧')+' '+esc(m.name)+'</h3>'+
+    '<div class="muted">'+esc(sp.desc||m.desc||'')+'</div>'+form+
+    (id==='sweep'?'<div class="hint">ينفّذ كل الوحدات المناسبة على الهدف بالتوازي، يعيد المحاولة عند الفشل، ولا يتوقف حتى ينتهي — ثم يعرض كل النتائج قابلة للتصدير.</div>':'')+
+    '</div><div id="out"></div>';
+  const chips=$('#chips');
+  if(chips){
+    const ex=id==='sweep'?['example.com','8.8.8.8','torvalds','test@gmail.com','CVE-2021-44228','50.11,8.68','+4915112345678','1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa','00:1A:2B:3C:4D:5E','5f4dcc3b5aa765d61d8327deb882cf99']
+      :[m.ph].filter(Boolean);
+    ex.forEach(e=>{const d=document.createElement('div');d.className='chip';d.textContent=e;
+      d.onclick=()=>{$('#q').value=e;if(id==='sweep')startSweep();else runModule();};chips.appendChild(d);});
+  }
+  $('#go').onclick=()=>id==='sweep'?startSweep():runModule();
+  if($('#stop'))$('#stop').onclick=()=>{ if(SWEEP){SWEEP.stopped=true;clearInterval(SWEEP.poll);} $('#stop').style.display='none';
+    $('#statePill').className='pill run';$('#statePill').textContent='أُوقف العرض (المهمة تكمل في الخادم)'; };
+  if($('#q'))$('#q').onkeydown=e=>{if(e.key==='Enter'&&$('#q').tagName==='INPUT'){e.preventDefault();id==='sweep'?startSweep():runModule();}};
+}
+
+/* ============================ SWEEP ============================ */
+function startSweep(){
+  const q=($('#q').value||'').trim();
+  if(!q){$('#out').innerHTML='<div class="card"><div class="err">أدخل هدفاً أولاً</div></div>';return;}
+  if(SWEEP&&SWEEP.poll){clearInterval(SWEEP.poll);}
+  const out=$('#out');
+  SWEEP={target:q,started:Date.now(),modules:{},order:[],total:0,done:0,ok:0,err:0,skip:0,finished:false};
+  out.innerHTML=`<div class="card">
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <b id="sTarget">${esc(q)}</b>
+      <span class="badge b-run" id="sKind">جارٍ تحديد النوع…</span>
+      <span class="spacer" style="flex:1"></span>
+      <span class="muted" id="sClock">0.0s</span>
+    </div>
+    <div class="bar"><i id="sBar"></i></div>
+    <div class="grid4">
+      <div class="stat"><b id="sDone">0/0</b><span>وحدات منتهية</span></div>
+      <div class="stat"><b id="sOk" style="color:#6ee7b7">0</b><span>ناجحة</span></div>
+      <div class="stat"><b id="sErr" style="color:#fca5a5">0</b><span>فاشلة</span></div>
+      <div class="stat"><b id="sSkip" style="color:#94a3b8">0</b><span>غير منطبقة</span></div>
+    </div>
+    <div class="btnrow" id="sActions" style="display:none">
+      <button class="ghost" id="expJson">تنزيل JSON</button>
+      <button class="ghost" id="expHtml">تنزيل تقرير HTML</button>
+      <button class="ghost" id="openAll">فتح كل التفاصيل</button>
+    </div>
+  </div>
+  <div id="sres"></div>`;
+  $('#stop')&&($('#stop').style.display='inline-block');
+  $('#statePill').style.display='inline-block';$('#statePill').className='pill run';$('#statePill').textContent='جارٍ المسح…';
+  const clock=setInterval(()=>{const el=$('#sClock');if(el)el.textContent=((Date.now()-SWEEP.started)/1000).toFixed(1)+'s';},100);
+  SWEEP.clock=clock;
+
+  // ---- client-side orchestrator: identical behaviour locally and on serverless ----
+  (async()=>{
+    let planReq;
+    try{
+      planReq=await (await fetch('/api/plan?q='+encodeURIComponent(q))).json();
+      if(!planReq.ok) throw new Error(planReq.error||'تعذر تحضير الخطة');
+    }catch(e){
+      $('#statePill').className='pill bad';$('#statePill').textContent='تعذر بدء المسح';
+      $('#sres').innerHTML='<div class="card"><div class="err">'+esc(e.message)+'</div></div>';
+      return;
+    }
+    const plan=planReq.data;
+    handleEvent({type:'start', kind:plan.kind, total:plan.total, modules:plan.modules});
+    const queue=plan.modules.filter(m=>m.runnable).map(m=>({id:m.id,name:m.name,attempts:0,q:m.q||plan.target}));
+    const skipped=plan.modules.filter(m=>!m.runnable);
+    skipped.forEach(m=>handleEvent({type:'result', id:m.id, name:m.name, status:'skipped', reason:m.skip||'غير منطبق', ms:0}));
+
+    const callOne=async job=>{
+      try{
+        const r=await (await fetch('/api/'+job.id+'?q='+encodeURIComponent(job.q))).json();
+        return r;
+      }catch(e){ return {ok:false, error:'فشل الاتصال: '+e.message}; }
+    };
+    const MAXTRIES=3, CONC=5;
+    let active=0;
+    await new Promise(resolve=>{
+      const next=()=>{
+        if(SWEEP.stopped){ if(active===0) resolve(); return; }
+        while(active<CONC && queue.length){
+          const job=queue.shift(); active++;
+          callOne(job).then(r=>{
+            if(r.ok){
+              handleEvent({type:'result', id:job.id, name:job.name, status:'ok', ms:r.ms, attempts:job.attempts+1, data:r.data});
+            }else if(job.attempts+1 < MAXTRIES){          // automatic repair pass
+              job.attempts++;
+              setTimeout(()=>{ queue.push(job); active--; next(); }, 900);
+              return;
+            }else{
+              handleEvent({type:'result', id:job.id, name:job.name, status:'error', ms:r.ms||0,
+                           error:r.error||'فشل غير معروف'});
+            }
+            active--; next();
+          });
+        }
+        if(active===0 && !queue.length) resolve();
+      };
+      next();
+    });
+    if(SWEEP.stopped){ $('#statePill').textContent='أُوقف يدوياً'; return; }
+    const ranCount=SWEEP.ok+SWEEP.err;
+    finishSweep({target:plan.target, kind:plan.kind, total_modules:plan.total, ran:ranCount,
+                 ok:SWEEP.ok, failed:SWEEP.err, skipped:SWEEP.skip,
+                 ms:Date.now()-SWEEP.started, errors:{}});
+  })();
+}
+
+function handleEvent(e){
+  if(e.type==='start'){
+    SWEEP.total=e.total;SWEEP.kind=e.kind;
+    $('#sKind').textContent='النوع: '+kindAr(e.kind);
+    $('#sKind').className='badge b-ok';
+    $('#sDone').textContent='0/'+e.total;
+    e.modules.forEach(m=>{
+      const row=document.createElement('div');row.className='res';row.id='r-'+m.id;
+      row.innerHTML=`<div class="hd"><span class="spin"></span><b>${esc(m.name)}</b>
+        <span style="flex:1"></span>
+        <span class="badge b-run" id="b-${m.id}">في الانتظار</span></div>
+        <div class="bd" id="d-${m.id}" style="display:none"></div>`;
+      $('#sres').appendChild(row);
+      SWEEP.order.push(m.id);
+    });
+  }
+  else if(e.type==='result'){ applyResult(e); }
+  else if(e.type==='done'){ finishSweep(e); }
+  else if(e.type==='fatal'){
+    $('#statePill').className='pill bad';$('#statePill').textContent='خطأ';
+    $('#sres').insertAdjacentHTML('afterbegin','<div class="card"><div class="err">'+esc(e.error)+'</div></div>');
+  }
+}
+
+function kindAr(k){return {domain:'نطاق/موقع',ip:'عنوان IP',email:'بريد إلكتروني',username:'اسم مستخدم',
+  phone:'هاتف',crypto:'عنوان عملة',hash:'هاش',mac:'عنوان MAC',cve:'ثغرة CVE',coords:'إحداثيات'}[k]||k;}
+
+function applyResult(e){
+  SWEEP.done++;
+  const row=$('#r-'+e.id); if(!row) return;
+  const b=$('#b-'+e.id), d=$('#d-'+e.id), hd=row.querySelector('.hd');
+  row.querySelector('.spin')?.remove();
+  if(e.status==='ok'){
+    SWEEP.ok++; SWEEP.modules[e.id]={status:'ok',ms:e.ms,data:e.data,attempts:e.attempts};
+    b.className='badge b-ok'; b.textContent='✓ '+(e.ms||0)+'ms'+(e.attempts>1?' (محاولة '+e.attempts+')':'');
+    d.style.display='block'; d.innerHTML=render(e.data,0,true);
+    hd.onclick=()=>{d.style.display=d.style.display==='none'?'block':'none';};
+  }else if(e.status==='skipped'){
+    SWEEP.skip++; SWEEP.modules[e.id]={status:'skipped',reason:e.reason};
+    b.className='badge b-skip'; b.textContent='لا ينطبق';
+    d.style.display='block'; d.innerHTML='<div class="muted">'+esc(e.reason||'')+'</div>';
+    hd.onclick=()=>{d.style.display=d.style.display==='none'?'block':'none';};
+  }else{
+    SWEEP.err++; SWEEP.modules[e.id]={status:'error',error:e.error};
+    b.className='badge b-err'; b.textContent='✗ فشل';
+    d.style.display='block';
+    d.innerHTML='<div class="err">'+esc(e.error||'')+'</div><div class="btnrow"><button class="ghost" onclick="retryOne(\''+e.id+'\')">إعادة محاولة هذه الوحدة</button></div>';
+    hd.onclick=()=>{d.style.display=d.style.display==='none'?'block':'none';};
+  }
+  const pct=SWEEP.total?Math.round(SWEEP.done/SWEEP.total*100):0;
+  $('#sBar').style.width=pct+'%';
+  $('#sDone').textContent=SWEEP.done+'/'+SWEEP.total;
+  $('#sOk').textContent=SWEEP.ok; $('#sErr').textContent=SWEEP.err; $('#sSkip').textContent=SWEEP.skip;
+  $('#sClock')&&($('#sClock').textContent=((Date.now()-SWEEP.started)/1000).toFixed(1)+'s');
+}
+
+async function retryOne(id){
+  const d=$('#d-'+id); if(d) d.innerHTML='<span class="spin"></span> إعادة المحاولة…';
+  const q=SWEEP.target;
+  try{
+    const r=await (await fetch('/api/'+id+'?q='+encodeURIComponent(q))).json();
+    if(r.ok){
+      SWEEP.modules[id]={status:'ok',ms:r.ms,data:r.data};
+      const b=$('#b-'+id); if(b){b.className='badge b-ok';b.textContent='✓ '+(r.ms||0)+'ms';}
+      if(d) d.innerHTML=render(r.data,0,true);
+      SWEEP.err=Math.max(0,SWEEP.err-1); $('#sErr').textContent=SWEEP.err;
+    }else if(d) d.innerHTML='<div class="err">'+esc(r.error)+'</div>';
+  }catch(e){ if(d) d.innerHTML='<div class="err">'+esc(e.message)+'</div>'; }
+}
+
+function finishSweep(e){
+  SWEEP.finished=true;
+  if(SWEEP.poll){clearInterval(SWEEP.poll);}
+  clearInterval(SWEEP.clock);
+  $('#sBar').style.width='100%';
+  $('#statePill').className=(e.failed?'pill run':'pill ok');
+  $('#statePill').textContent='انتهى · '+e.ok+'/'+e.ran+' ناجحة · '+(e.ms/1000).toFixed(1)+'s';
+  $('#stop')&&($('#stop').style.display='none');
+  $('#sActions').style.display='flex';
+  SWEEP.summary=e;
+  $('#expJson').onclick=()=>download('osint-sweep-'+Date.now()+'.json',JSON.stringify({summary:e,results:SWEEP.modules},null,2),'application/json');
+  $('#expHtml').onclick=()=>download('osint-report-'+Date.now()+'.html',buildHtmlReport(),'text/html');
+  $('#openAll').onclick=()=>$$('.res .bd').forEach(x=>x.style.display='block');
+  const box=document.createElement('div');
+  box.className='card';
+  box.innerHTML='<h3>ملخص المسح</h3><div class="kv">'+
+    '<div class="k">الهدف</div><div>'+esc(e.target)+'</div>'+
+    '<div class="k">النوع</div><div>'+esc(kindAr(e.kind))+'</div>'+
+    '<div class="k">وحدات نُفِّذت</div><div>'+e.ran+' من '+e.total_modules+'</div>'+
+    '<div class="k">ناجحة</div><div>'+e.ok+'</div>'+
+    '<div class="k">فاشلة</div><div>'+e.failed+'</div>'+
+    '<div class="k">غير منطبقة</div><div>'+(typeof e.skipped==='number'?e.skipped:Object.keys(e.skipped||{}).length)+'</div>'+
+    '<div class="k">الزمن الكلي</div><div>'+(e.ms/1000).toFixed(1)+' ثانية</div></div>'+
+    (Object.keys(e.errors||{}).length?'<details open><summary>وحدات فشلت (يمكن إعادة محاولتها فردياً)</summary>'+render(e.errors,0,true)+'</details>':'')+
+    (e.skipped&&typeof e.skipped==='object'&&Object.keys(e.skipped).length?'<details><summary>وحدات غير منطبقة على هذا النوع ('+Object.keys(e.skipped).length+')</summary>'+render(e.skipped,0,false)+'</details>':'');
+  $('#sres').insertBefore(box,$('#sres').firstChild);
+}
+
+function buildHtmlReport(){
+  const e=SWEEP.summary||{};
+  let body='<h1>تقرير OSINT — '+esc(SWEEP.target)+'</h1>'+
+    '<p>النوع: '+esc(kindAr(e.kind||SWEEP.kind))+' · ناجحة: '+(e.ok||0)+' · فاشلة: '+(e.failed||0)+
+    ' · غير منطبقة: '+(e.skipped||0)+' · الزمن: '+((e.ms||0)/1000).toFixed(1)+'s · '+new Date().toLocaleString('ar')+'</p>';
+  SWEEP.order.forEach(id=>{
+    const m=SWEEP.modules[id]; if(!m) return;
+    const nm=(MODULES.find(x=>x.id===id)||{}).name||id;
+    body+='<h2>'+esc(nm)+' <small>('+m.status+' · '+(m.ms||0)+'ms)</small></h2>';
+    if(m.status==='ok') body+='<pre>'+esc(JSON.stringify(m.data,null,2))+'</pre>';
+    else if(m.status==='error') body+='<p class="e">'+esc(m.error)+'</p>';
+    else body+='<p class="s">'+esc(m.reason||'')+'</p>';
+  });
+  return '<!DOCTYPE html><html lang="ar" dir="rtl"><meta charset="utf-8"><title>تقرير '+esc(SWEEP.target)+'</title>'+
+    '<style>body{font-family:Tahoma,Arial;background:#0b1017;color:#e8eef5;padding:24px;line-height:1.6}'+
+    'h1{color:#22d3a6}h2{color:#7dd3fc;border-bottom:1px solid #1e2a38;padding-bottom:4px;margin-top:26px}'+
+    'pre{background:#070d13;border:1px solid #1e2a38;padding:12px;border-radius:8px;direction:ltr;text-align:left;'+
+    'overflow:auto;font-size:12px;max-height:520px}.e{color:#fca5a5}.s{color:#94a3b8}small{color:#8ba3ba;font-weight:400}</style>'+
+    body+'</html>';
+}
+function download(name,content,type){
+  const b=new Blob([content],{type:type+';charset=utf-8'}),a=document.createElement('a');
+  a.href=URL.createObjectURL(b);a.download=name;a.click();
+}
+
+/* ============================ SINGLE MODULE ============================ */
+async function runModule(){
+  const id=ACTIVE,out=$('#out'),btn=$('#go');
+  if(btn)btn.disabled=true;
+  out.innerHTML='<div class="card"><span class="spin"></span> جارٍ التنفيذ…</div>';
+  const t0=performance.now();
+  try{
+    let res;
+    if(id==='file'){
+      const f=$('#f').files[0]; if(!f){out.innerHTML='<div class="err">اختر ملفاً</div>';btn.disabled=false;return;}
+      const fd=new FormData();fd.append('file',f);
+      res=await (await fetch('/api/file',{method:'POST',body:fd})).json();
+    }else if(id==='ioc'){
+      const txt=$('#q').value; if(!txt.trim()){out.innerHTML='<div class="err">الصق نصاً</div>';btn.disabled=false;return;}
+      res=await (await fetch('/api/ioc?enrich='+($('#enrich')&&$('#enrich').checked?'1':'0'),{method:'POST',
+        headers:{'Content-Type':'application/json'},body:JSON.stringify({q:txt})})).json();
+    }else if(id==='password'){
+      const pw=$('#q').value; if(!pw){out.innerHTML='<div class="err">أدخل كلمة مرور</div>';btn.disabled=false;return;}
+      res=await (await fetch('/api/password',{method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({q:pw})})).json();
+    }else{
+      const q=($('#q').value||'').trim(); if(!q){out.innerHTML='<div class="err">أدخل قيمة</div>';btn.disabled=false;return;}
+      res=await (await fetch('/api/'+id+'?q='+encodeURIComponent(q))).json();
+    }
+    const ms=Math.round(performance.now()-t0);
+    const p=$('#statePill');p.style.display='inline-block';
+    p.className='pill '+(res.ok?'ok':'bad');p.textContent=res.ok?('✓ '+ms+'ms'):'✗ خطأ';
+    out.innerHTML=res.ok
+      ? '<div class="card">'+render(res.data,0,true)+
+        '<div class="btnrow"><button class="ghost" onclick="navigator.clipboard.writeText(document.querySelector(\'#rawjson\').textContent)">نسخ JSON</button>'+
+        '<button class="ghost" onclick="download(\''+id+'-'+Date.now()+'.json\',document.querySelector(\'#rawjson\').textContent,\'application/json\')">تنزيل JSON</button></div>'+
+        '<details><summary>JSON الخام</summary><pre id="rawjson">'+esc(JSON.stringify(res.data,null,2))+'</pre></details></div>'
+      : '<div class="card"><div class="err">'+esc(res.error||'خطأ')+'</div></div>';
+  }catch(e){ out.innerHTML='<div class="card"><div class="err">فشل الاتصال: '+esc(e.message)+'</div></div>'; }
+  finally{ if(btn)btn.disabled=false; }
+}
+
+/* ============================ RENDERER ============================ */
+const LBL={domain:'النطاق',ip:'العنوان',email:'البريد',username:'اسم المستخدم',country:'الدولة',city:'المدينة',
+isp:'المزوّد',org:'المنظمة',as:'ASN',ptr:'PTR',server:'الخادم',status:'الحالة',title:'العنوان',
+final_url:'الرابط النهائي',count:'العدد',found_count:'موجود في',checked:'فُحص',open_ports:'منافذ مفتوحة',
+security_score:'تقييم الأمان',tls_version:'إصدار TLS',issuer:'المُصدر',subject:'الموضوع',not_after:'ينتهي',
+sans:'أسماء بديلة',subdomains:'نطاقات فرعية',records:'السجلات',answers:'الإجابات',results:'النتائج',
+total:'الإجمالي',ms:'الزمن',entropy:'الإنتروبيا',magic:'النوع الحقيقي',hashes:'الهاشات',exif:'EXIF',
+pwned:'مسرّبة',pwned_count:'مرات الظهور',strength:'القوة',valid_format:'صيغة صحيحة',chain:'الشبكة',
+balances:'الأرصدة',mx:'سجلات MX',accepts_mail:'يستقبل بريداً',disposable:'بريد مؤقت',role_account:'حساب وظيفي',
+gravatar_exists:'Gravatar',tools:'الأدوات',candidates:'أنواع محتملة',aircraft:'طائرات',events:'الأحداث',
+nameservers:'خوادم الأسماء',entities:'الكيانات',hits:'الإصابات',verdict:'الحكم',sources_checked:'مصادر مفحوصة',
+issuers:'المُصدرون',unique_names:'أسماء فريدة',whois_server:'خادم WHOIS',parsed:'حقول مستخرجة',
+vendor:'المورّد',oui:'OUI',articles:'مقالات',extract:'ملخص',links:'روابط',errors:'أخطاء',sources:'مصادر',
+redirect_chain:'سلسلة التحويل',technologies:'تقنيات',headers:'الرؤوس',redirect_count:'عدد التحويلات',
+threat_exit:'Tor',dorks:'Dorks',reputation:'السمعة',shodan_internetdb:'Shodan InternetDB',asn_info:'معلومات ASN',
+geo:'الجغرافيا',name:'الاسم',url:'الرابط',port:'المنفذ',service:'الخدمة',open:'مفتوح',sha256:'SHA-256',
+md5:'MD5',sha1:'SHA-1',iocs:'مؤشرات',emails:'بريد',ipv4:'عناوين IPv4',urls:'روابط',note:'ملاحظة',
+warning:'تحذير',skipped:'غير منطبقة',data:'البيانات',kind:'النوع',target:'الهدف',term:'المصطلح',unknown:'غير محدد',not_found:'غير موجود',found:'موجود',blocked:'محجوب',reason:'السبب',summary:'الملخص',ran:'نُفِّذت',total_modules:'إجمالي الوحدات',failed:'فاشلة',ok:'ناجحة',success:'ناجح',state:'الحالة',detail:'التفصيل',site:'الموقع',manual_checks:'فحوصات يدوية',started_at:'بدأت',finished_at:'انتهت',version:'الإصدار',ipv4:'IPv4',body:'المحتوى',value:'القيمة',type:'النوع'};
+const L=s=>LBL[s]||s;
+function isObj(v){return v&&typeof v==='object'&&!Array.isArray(v);}
+function render(d,depth=0,open=false){
+  if(d===null||d===undefined)return '<span class="muted">—</span>';
+  if(typeof d==='boolean')return d?'<span class="badge b-ok">نعم</span>':'<span class="badge b-skip">لا</span>';
+  if(Array.isArray(d)){
+    if(!d.length)return '<span class="muted">(فارغ)</span>';
+    if(d.every(x=>!isObj(x)&&!Array.isArray(x)))
+      return '<div class="chips">'+d.map(x=>'<span class="chip">'+esc(x)+'</span>').join('')+'</div>';
+    const objs=d.filter(isObj);
+    if(objs.length&&objs.every(o=>Object.values(o).every(v=>!isObj(v)&&!Array.isArray(v)))){
+      const keys=[...new Set(objs.flatMap(o=>Object.keys(o)))].slice(0,12);
+      return '<div style="overflow:auto;max-height:480px"><table><thead><tr>'+keys.map(k=>'<th>'+esc(L(k))+'</th>').join('')+
+        '</tr></thead><tbody>'+objs.slice(0,400).map(o=>'<tr>'+keys.map(k=>'<td>'+cell(o[k])+'</td>').join('')+'</tr>').join('')+
+        '</tbody></table></div>'+(d.length>400?'<div class="hint">يُعرض 400 من '+d.length+'</div>':'');
+    }
+    return d.slice(0,80).map((x,i)=>'<details'+(open&&i<3?' open':'')+'><summary>#'+(i+1)+'</summary>'+render(x,depth+1,open)+'</details>').join('');
+  }
+  if(isObj(d)){
+    const keys=Object.keys(d);
+    if(!keys.length)return '<span class="muted">(فارغ)</span>';
+    const scal=keys.filter(k=>!isObj(d[k])&&!Array.isArray(d[k]));
+    const nest=keys.filter(k=>isObj(d[k])||Array.isArray(d[k]));
+    let h='';
+    if(scal.length)h+='<div class="kv">'+scal.map(k=>'<div class="k">'+esc(L(k))+'</div><div>'+cell(d[k])+'</div>').join('')+'</div>';
+    nest.forEach(k=>{
+      const v=d[k];
+      if((Array.isArray(v)&&!v.length)||(isObj(v)&&!Object.keys(v).length))return;
+      h+='<details'+(open?' open':'')+'><summary>'+esc(L(k))+(Array.isArray(v)?' <span class="muted">('+v.length+')</span>':'')+
+        '</summary>'+render(v,depth+1,open)+'</details>';
+    });
+    return h||'<span class="muted">(فارغ)</span>';
+  }
+  return esc(d);
+}
+function cell(v){
+  if(String(v)==='[object Object]')return '<span class="muted">—</span>';
+  if(v===null||v===undefined)return '<span class="muted">—</span>';
+  if(typeof v==='boolean')return v?'<span class="badge b-ok">نعم</span>':'<span class="badge b-skip">لا</span>';
+  if(isObj(v)||Array.isArray(v)){const s=JSON.stringify(v);return '<span class="muted">'+esc(s.slice(0,110))+(s.length>110?'…':'')+'</span>';}
+  const s=String(v);
+  if(/^https?:\/\//.test(s))return '<a href="'+esc(s)+'" target="_blank" rel="noopener">'+esc(s.length>70?s.slice(0,70)+'…':s)+'</a>';
+  if(/^(found|not_found|unknown|blocked)$/.test(s)){
+    const m={found:['b-ok','موجود'],not_found:['b-skip','غير موجود'],unknown:['b-run','غير محدد'],blocked:['b-run','محجوب']};
+    const [c,t]=m[s];return '<span class="badge '+c+'">'+t+'</span>';
+  }
+  if(/^\d{4}-\d{2}-\d{2}T/.test(s))return esc(s.replace('T',' ').slice(0,19));
+  return esc(s.length>320?s.slice(0,320)+'…':s);
+}
+
+/* ============================ SELF CHECK ============================ */
+async function runSelfCheck(){
+  if(ES){ES.close();ES=null;}
+  ACTIVE='selfcheck';setActive('');
+  if(SWEEP&&SWEEP.poll){clearInterval(SWEEP.poll);}
+  $('#title').textContent='فحص ذاتي';
+  $('#out').innerHTML='<div class="card"><span class="spin"></span> اختبار كل الوحدات فعلياً… (~15 ثانية)</div>';
+  try{
+    const r=await (await fetch('/api/selfcheck')).json();
+    const rows=r.results.map(x=>'<tr><td>'+esc(x.module)+'</td><td>'+(x.ok?'<span class="badge b-ok">يعمل</span>':'<span class="badge b-err">فشل</span>')+
+      '</td><td class="muted">'+x.ms+'ms</td><td class="muted">'+esc(x.error||'')+'</td></tr>').join('');
+    $('#out').innerHTML='<div class="card"><h3>'+(r.ok?'✓ كل الوحدات تعمل':'⚠ بعض الوحدات فشلت')+'</h3>'+
+      '<div class="grid4"><div class="stat"><b>'+r.passed+'/'+r.total+'</b><span>ناجحة</span></div>'+
+      '<div class="stat"><b>'+(r.total_ms/1000).toFixed(1)+'s</b><span>الزمن</span></div></div>'+
+      '<table><thead><tr><th>الوحدة</th><th>النتيجة</th><th>الزمن</th><th>خطأ</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+  }catch(e){$('#out').innerHTML='<div class="card"><div class="err">'+esc(e.message)+'</div></div>';}
+}
+boot();
+</script>
+</body>
+</html>
