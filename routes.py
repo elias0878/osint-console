@@ -121,6 +121,31 @@ def module_dispatch(mid, args):
     return fn()
 
 
+def file_from_multipart(body, ctype):
+    """Minimal multipart/form-data parser (stdlib only) -> (filename, bytes)."""
+    import re as _re
+    if not ctype or "multipart/form-data" not in ctype or "boundary=" not in ctype:
+        raise FetchError("أرسل الملف عبر multipart/form-data")
+    boundary = ctype.split("boundary=", 1)[1].strip().strip('"').encode()
+    for part in body.split(b"--" + boundary):
+        if b"Content-Disposition" not in part:
+            continue
+        head, _, payload = part.partition(b"\r\n\r\n")
+        m = _re.search(rb'filename="([^"]*)"', head)
+        if m:
+            data = payload[:-2] if payload.endswith(b"\r\n") else payload
+            if data:
+                return m.group(1).decode("utf-8", "replace") or "upload.bin", data
+    raise FetchError("لم يصل ملف")
+
+
+def dispatch_file(body, ctype):
+    """POST /api/file on both the local server and the serverless function."""
+    import modules_intel as intel
+    fname, data = file_from_multipart(body, ctype)
+    return guard(intel.file_analyze, fname, data)
+
+
 def dispatch(path, args):
     """path like '/api/dns' or '/api/health'."""
     name = path[len("/api/"):] if path.startswith("/api/") else path.lstrip("/")
