@@ -1,5 +1,11 @@
+# Local-only dev server: Vercel would otherwise mistake it for a root WSGI entrypoint
+server.py
+run.sh
+Dockerfile
+test_all.py
+test_content.py
+test_ui.py
+scripts/
+logs/
 __pycache__/
 *.pyc
-tools/
-logs/
-docs/*.png

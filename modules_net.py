@@ -194,9 +194,10 @@ def subdomains(domain, limit=500):
         return names
 
     jobs = {"crt.sh": crt, "hackertarget": htr, "rapiddns": rapid, "certspotter": cspot}
-    with cf.ThreadPoolExecutor(max_workers=4) as ex:
-        futs = {ex.submit(fn): name for name, fn in jobs.items()}
-        for f in cf.as_completed(futs, timeout=60):
+    ex = cf.ThreadPoolExecutor(max_workers=4)
+    futs = {ex.submit(fn): name for name, fn in jobs.items()}
+    try:
+        for f in cf.as_completed(futs, timeout=45):
             name = futs[f]
             try:
                 r = f.result()
@@ -204,6 +205,10 @@ def subdomains(domain, limit=500):
                 found |= r
             except Exception as e:
                 errors[name] = str(e)[:120]
+    except cf.TimeoutError:
+        errors["timeout"] = "مصدر تجاوز 45 ثانية — استُخدمت النتائج الجزئية"
+    finally:
+        ex.shutdown(wait=False, cancel_futures=True)
     sub = sorted(found)[:limit]
     if not sub and errors and len(errors) == len(jobs):
         raise FetchError("كل مصادر النطاقات الفرعية غير متاحة الآن: " + "; ".join(sorted(errors))[:150])

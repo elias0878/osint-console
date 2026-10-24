@@ -1,11 +1,11 @@
 # 🛰️ OSINT Console — منصة تحقيق مجانية بالكامل، بلا مفاتيح API
 
-[![Live Demo](https://img.shields.io/badge/demo-live-22d3a6?style=flat-square)](https://osint-console.vercel.app)
+[![Live Demo](https://img.shields.io/badge/demo-live-22d3a6?style=flat-square)](https://osint-console-ar.vercel.app)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.11%2B-3776ab?style=flat-square)](https://python.org)
 [![No API keys](https://img.shields.io/badge/API%20keys-none-success?style=flat-square)](#)
 
-> 🌐 **نسخة جاهزة على الإنترنت:** `https://osint-console.vercel.app` — نفس المنصة تعمل على Vercel (دوال serverless) ويمكن تشغيلها محلياً بأمر واحد.
+> 🌐 **نسخة جاهزة على الإنترنت:** `https://osint-console-ar.vercel.app` — نفس المنصة تعمل على Vercel (دوال serverless) ويمكن تشغيلها محلياً بأمر واحد.
 
 منصة ويب واحدة عربية (RTL) تجمع **36 وحدة تحقيق** تعمل فعلياً من المتصفح، مبنية على مصادر مجانية
 لا تطلب تسجيلاً ولا اشتراكاً ولا مفتاح API. كل البيانات تُعالج داخل خادمك، ولا تُرسل إلى أي طرف ثالث
@@ -98,7 +98,25 @@ osint-console/
 
 الواجهات: `GET /api/sweep?q=…` (متزامن) · `GET /api/sweep/start?q=…` → `{"job":"…"}` · `GET /api/sweep/poll?id=…&from=N` (تحديثات تراكمية) · `GET /api/sweep/stream` (SSE اختياري).
 
-## 4) التشغيل
+## 4) النشر على Vercel (النسخة الحيّة)
+
+الموقع الحيّ: **https://osint-console-ar.vercel.app** — نشر إنتاجي واحد يعمل عليه:
+
+```
+الملفات:
+  index.html          ← الواجهة (ملف ثابت واحد، بلا build ولا npm)
+  api/index.py        ← دالة serverless واحدة (WSGI) تُخدِّم كل /api/*
+  routes.py           ← مُوزّع مشترك: dispatch(path,args) + plan(q)
+  catalog_meta.py     ← تعريف الوحدات والمجموعات (36 وحدة)
+  vercel.json         ← rewrites + headers + maxDuration
+```
+
+- إعادة النشر: `vercel deploy --prod` (أو اربط المستودع بـ Vercel ليتحول كل push إلى نشر تلقائي).
+- `server.py` (خادم التطوير المحلي) مُستثنى في `.vercelignore` حتى لا يُحسب كـ entrypoint بديل.
+- **لا حالة على الخادم**: Vercel serverless لا يحتفظ بذاكرة بين الطلبات، لذلك منسّق «المسح الشامل» يعمل في المتصفح: يطلب `/api/plan` ثم ينادي `/api/<module>` بالتوازي (5 معاً) مع 3 محاولات لكل وحدة — نفس السلوك تماماً محلياً وعلى الإنترنت.
+- Supabase **غير مطلوب**: التطبيق بلا قاعدة بيانات ولا مفاتيح؛ يمكن إضافته لاحقاً لحفظ سجل المسحات اختيارياً.
+
+## 5) التشغيل المحلي
 
 ```bash
 cd osint-console
@@ -111,7 +129,7 @@ docker build -t osint-console . && docker run -p 8000:8000 osint-console
 > الخادم يربط `0.0.0.0` ليعمل خلف أي وسيط/استضافة. لا يستخدم أي ملف تعريف أو قاعدة بيانات:
 > كل الحالة في الذاكرة (كاش 5-60 دقيقة) وتُصفَّر عند إعادة التشغيل.
 
-## 5) الاختبارات
+## 6) الاختبارات
 
 ```bash
 python3 test_all.py       # 32 نقطة API
@@ -137,7 +155,7 @@ python3 test_ui.py example.com    # متصفح حقيقي (Playwright): يشغّ
 وثائق إضافية: `docs/oss_install_report.csv` (تحميل الأدوات)، `docs/screenshot-sweep.png` (لقطة الواجهة)،
 `docs/جولة-التطوير.md` (كل العيوب التي اكتُشفت وأُصلحت أثناء الاختبار).
 
-## 6) واجهة API
+## 7) واجهة API
 
 كل نقطة ترجع `{"ok":true,"data":{...},"ms":123}` أو `{"ok":false,"error":"رسالة عربية"}`.
 
@@ -169,7 +187,7 @@ python3 test_ui.py example.com    # متصفح حقيقي (Playwright): يشغّ
 | `/api/ioc?enrich=1` `{"q":"نص"}` | استخراج + إثراء المؤشرات |
 | `/api/file` (multipart) | تحليل ملف |
 
-## 7) الأدوات مفتوحة المصدر — نتيجة التحميل الفعلي
+## 8) الأدوات مفتوحة المصدر — نتيجة التحميل الفعلي
 
 من 1738 عنصراً في القائمة الأصلية، **148 رابطاً** يشير إلى مستودعات كود (الباقي مواقع ويب لا تُحمَّل).
 شُغِّل سكربت التثبيت فعلياً على كل المستودعات، والنتيجة الموثّقة في `docs/oss_install_report.csv`:
@@ -197,7 +215,7 @@ python3 test_ui.py example.com    # متصفح حقيقي (Playwright): يشغّ
 > (Shodan, VirusTotal, HIBP API, Dehashed…). المنصة هنا تغطي كل ما يعمل **بلا مفاتيح فقط**،
 > والبقية متاحة كدليل بروابطها داخل «دليل الأدوات».
 
-## 8) حدود معروفة (مهمة)
+## 9) حدود معروفة (مهمة)
 
 | القيد | التفصيل |
 |---|---|
@@ -208,7 +226,7 @@ python3 test_ui.py example.com    # متصفح حقيقي (Playwright): يشغّ
 | **المواقع المحجوبة آلياً** | كل ما يظهر في تدقيقنا كـ 403 (Cloudflare) يحتاج متصفحاً؛ دليل الأدوات يوفّر الروابط. |
 | **الخصوصية** | الاستعلامات تمر إلى مزوّدي البيانات المجانيين (مثل ip-api, crt.sh). لتشغيل حساس استخدم شبكة تحت سيطرتك. |
 
-## 9) الاستخدام المسؤول
+## 10) الاستخدام المسؤول
 
 هذه الأدوات للبحث المشروع: التحقق من صحافيين، تدقيق أمني، فحص أصولك، استجابة للحوادث،
 أبحاث أكاديمية. **لا تستخدم** فحص المنافذ أو أي وحدة نشطة على أهداف لا تملكها أو لا تملك

@@ -12,6 +12,25 @@ RETRIES = 1                  # extra attempts on network/upstream failures
 
 RETRYABLE = (FetchError, TimeoutError, ConnectionError, OSError)
 
+def _coords_geocode(intel, lat, lon):
+    def run():
+        rev = intel.reverse_geocode(lat, lon)
+        bdc = (rev or {}).get("bigdatacloud") or {}
+        city = bdc.get("city") or bdc.get("locality") or ""
+        country = bdc.get("countryName") or ""
+        if not city and not country:
+            ph = (rev or {}).get("photon") or {}
+            props = ((ph.get("features") or [{}])[0] or {}).get("properties") or {}
+            city, country = props.get("city") or props.get("name") or "", props.get("country") or ""
+        if not city and not country:
+            raise RuntimeError("لا يوجد اسم مكان لهذه الإحداثيات")
+        place = ", ".join([x for x in (city, country) if x])
+        out = intel.geocode(place)
+        out["resolved_place"] = place
+        return out
+    return run
+
+
 def normalize(q):
     """Accept URLs, bare hosts, @handles and spaced numbers; return a clean target."""
     q = (q or "").strip()
@@ -140,7 +159,8 @@ def build_plan(q, kind):
         add("weather", "الطقس", lambda: intel.weather(lat, lon))
         add("flight", "طيران ADS-B", lambda: net.flight_nearby(lat, lon, 40))
         add("earthquakes", "زلازل", lambda: intel.earthquakes("2.5", "day"), qval="2.5/day")
-        add("geo", "ترميز جغرافي", lambda: intel.geocode(f"{lat},{lon}"), qval=f"{lat},{lon}")
+        # forward geocoding needs a place name, not coordinates: reverse-geocode first, then resolve it back
+        add("geo", "ترميز جغرافي (عكس ثم ترميز)", _coords_geocode(intel, lat, lon), qval=f"{lat},{lon}")
     else:
         add("username", "تعداد أسماء المستخدمين", lambda: ident.username_scan(q))
 

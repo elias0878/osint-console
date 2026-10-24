@@ -248,6 +248,25 @@ def threat_check(target):
                       "غير مُدرج في المصادر المفحوصة" if out["sources_checked"] else "تعذر الفحص")
     return out
 
+def _gnews_rss(q, limit=25):
+    """Google News RSS — free, key-less fallback when GDELT throttles or is unreachable."""
+    rss = "https://news.google.com/rss/search?q=" + quote(q) + "&hl=ar&gl=SA&ceid=SA:ar"
+    st, hd, raw, _ = safe_fetch(rss, timeout=12, max_bytes=900_000)
+    xml = raw.decode("utf-8", "replace")
+    items = []
+    for m in list(re.finditer(r"<item>(.*?)</item>", xml, re.S))[:limit]:
+        block = m.group(1)
+        t = re.search(r"<title>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?</title>", block, re.S)
+        u = re.search(r"<link>(.*?)</link>", block, re.S)
+        d = re.search(r"<pubDate>(.*?)</pubDate>", block, re.S)
+        title = (t.group(1) if t else "").strip()
+        link = (u.group(1) if u else "").strip()
+        if title:
+            items.append({"title": title, "url": link, "source": "Google News RSS",
+                          "seendate": (d.group(1) if d else None)})
+    return items
+
+
 def news_search(q, timespan="7d"):
     q = q.strip()
     if not q:
@@ -255,29 +274,52 @@ def news_search(q, timespan="7d"):
     out = {"query": q, "timespan": timespan, "articles": []}
     url = ("https://api.gdeltproject.org/api/v2/doc/doc?query=" + quote(q) +
            f"&mode=artlist&maxrecords=25&timespan={timespan}&format=json&sort=datedesc")
-    cached = cache_get("news:" + url, 600)
+    ck = "news2:" + url
+    cached = cache_get(ck, 600)
     if cached is not None:
         cached["cached"] = True
         return cached
-    try:
-        st, hd, raw, _ = safe_fetch(url, timeout=8, max_bytes=1_500_000)
+
+    last_err = None
+    throttled = False
+    try:                                            # single short attempt: fail fast to the fallback
+        st, hd, raw, _ = safe_fetch(url, timeout=7, max_bytes=1_500_000)
         if st == 429:
-            out["note"] = "GDELT يحدّ الطلبات (طلب كل 5 ثوانٍ) — أعد المحاولة بعد قليل، أو استخدم رابط Google News أدناه."
+            throttled = True
         else:
             j = json.loads(raw.decode("utf-8", "replace"))
-            for a in (j.get("articles") or [])[:25]:
-                out["articles"].append({"title": a.get("title"), "url": a.get("url"),
-                                        "domain": a.get("domain"), "language": a.get("language"),
-                                        "country": a.get("sourcecountry"), "seendate": a.get("seendate")})
-            out["count"] = len(out["articles"])
-            if not out["articles"]:
-                out["note"] = "لا مقالات مطابقة في المدة المحددة (جرّب كلمة أعم أو timespan=30d)."
-            cache_set("news:" + url, out, 600)
+            if j.get("status") == "error":          # GDELT reports throttling in the body too
+                throttled = True
+            else:
+                for a in (j.get("articles") or [])[:25]:
+                    out["articles"].append({"title": a.get("title"), "url": a.get("url"),
+                                            "domain": a.get("domain"), "language": a.get("language"),
+                                            "country": a.get("sourcecountry"), "seendate": a.get("seendate")})
+                out["count"] = len(out["articles"])
+                if not out["articles"]:
+                    out["note"] = "لا مقالات مطابقة في المدة المحددة (جرّب كلمة أعم أو timespan=30d)."
+                cache_set(ck, out, 600)
     except Exception as e:
-        out["note"] = f"تعذر جلب الأخبار: {str(e)[:120]}"
+        last_err = e
+
+    if "count" not in out:                       # GDELT unavailable -> independent fallback
+        try:
+            items = _gnews_rss(q)
+            if items:
+                out["articles"] = items
+                out["count"] = len(items)
+                why = "يتجاوز حدّ الطلبات" if throttled else f"غير متاح ({str(last_err)[:50]})"
+                out["note"] = f"GDELT {why} — النتائج أدناه من Google News RSS (مصدر بديل مستقل)."
+            else:
+                out["note"] = "تعذر جلب الأخبار من GDELT ومن Google News الآن — جرّب لاحقاً."
+        except Exception as e2:
+            out["note"] = f"تعذر جلب الأخبار: {str(last_err or e2)[:100]}"
+        cache_set(ck, out, 120)
+
     out["links"] = {"Google News": f"https://news.google.com/search?q={quote(q)}",
                     "GDELT TV": f"https://tv.gdeltproject.org/?query={quote(q)}"}
     return out
+
 
 def cert_issuers(domain):
     domain = domain.strip().lower()
